@@ -5,7 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@mipmap/bg"
-    tools:context="so.dun.mp3.Data.MainActivity"
+    tools:context="activity.MainActivity"
     android:orientation="vertical">
 
 
