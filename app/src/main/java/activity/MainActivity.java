@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
         //Check the access permission
         if (AccessUtil.verifyStoragePermissions(this)) {
-            if (mp3.initSongs()) {
+            if (mp3.initSongs(this)) {
                 adapter = Adapter.songListAdapter(this, android.R.layout.simple_list_item_1, mp3.getSongList());
                 listView.setAdapter(adapter);
             } else {
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         switch (requestCode) {
             case 1: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (mp3.initSongs()) {
+                    if (mp3.initSongs(this)) {
                         adapter = Adapter.songListAdapter(this, android.R.layout.simple_list_item_1, mp3.getSongList());
                         listView.setAdapter(adapter);
                     } else {
@@ -119,7 +119,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                     }
                 } else {
                     Toast.makeText(this, "你拒绝了访问SD卡的权限！", Toast.LENGTH_SHORT).show();
-                    android.os.Process.killProcess(android.os.Process.myPid());
                 }
                 return;
             }
@@ -143,7 +142,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
     @Override
     protected void onPause() {
-        mp3.initSongs();
         super.onPause();
     }
 
@@ -164,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         mediaPlayer.reset();
         try {
             //Set the data source
-            mediaPlayer.setDataSource(mp3.getSongPath().get(index));
+            mediaPlayer.setDataSource(mp3.getSongList().get(index).getSongPath());
             //Prepare the media
             mediaPlayer.prepare();
         } catch (IllegalArgumentException e) {
@@ -176,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         }
 
         //Change the title to the current music
-        String songName = mp3.getSongList().get(index);
+        String songName = mp3.getSongList().get(index).getSongName();
         textViewSongName.setText(songName);
 
         //Change the time length of current music

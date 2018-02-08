@@ -36,7 +36,7 @@ public class FileUtil {
      */
     private static void getFiles(String path, Map<String, String> results) {
         File file = new File(path);
-        if(!file.canRead()){
+        if (!file.canRead()) {
             return;
         }
 
