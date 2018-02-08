@@ -21,9 +21,9 @@ public class Adapter {
      * @param songList: What is the data
      * @return
      */
-    public static ArrayAdapter songListAdapter(Activity activity, int resource, List<String> songList) {
+    public static ArrayAdapter songListAdapter(Activity activity, int resource, final List<Song> songList) {
 
-        return new ArrayAdapter<String>(activity, resource, songList) {
+        return new ArrayAdapter<Song>(activity, resource, songList) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -38,6 +38,8 @@ public class Adapter {
 
                 // Change the item text size
                 item.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+
+                item.setText(songList.get(position).getSongName());
 
                 // return the view
                 return item;
